@@ -23,7 +23,7 @@ public class Empresa {
 			return encontre;
 		}
 	}
-
+// HOLA
 	public String obtenerNumeroLibre() {
 		return guia.obtenerNumeroLibre();
 	}
