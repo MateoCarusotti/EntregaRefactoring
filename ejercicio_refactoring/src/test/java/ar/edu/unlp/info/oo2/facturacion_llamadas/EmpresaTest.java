@@ -51,15 +51,20 @@ class EmpresaTest {
 		assertTrue(this.sistema.existeUsuario(nuevaPersona));
 	}
 
+
 	@Test
 	void obtenerNumeroLibre() {
 		// por defecto es el ultimo
 		assertEquals("2214444559", this.sistema.obtenerNumeroLibre());
-
-		this.sistema.getGestorNumeros().cambiarTipoGenerador("primero");
+		
+		Generador primero = new GeneradorPrimero();
+		
+		this.sistema.getGestorNumeros().cambiarTipoGenerador(primero);
 		assertEquals("2214444554", this.sistema.obtenerNumeroLibre());
-
-		this.sistema.getGestorNumeros().cambiarTipoGenerador("random");
+		
+		Generador random = new GeneradorRandom();
+		
+		this.sistema.getGestorNumeros().cambiarTipoGenerador(random);
 		assertNotNull(this.sistema.obtenerNumeroLibre());
 	}
 }
