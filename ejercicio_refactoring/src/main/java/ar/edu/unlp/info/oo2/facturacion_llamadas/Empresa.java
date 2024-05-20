@@ -51,13 +51,13 @@ public class Empresa {
 	public Llamada registrarLlamada(Cliente origen, Cliente destino, String t, int duracion) {
 		Llamada llamada = new Llamada(t, origen.getNumeroTelefono(), destino.getNumeroTelefono(), duracion);
 		llamadas.add(llamada);
-		origen.llamadas.add(llamada);
+		origen.addLlamada(llamada);
 		return llamada;
 	}
-
+	
 	public double calcularMontoTotalLlamadas(Cliente cliente) {
 		double c = 0;
-		for (Llamada l : cliente.llamadas) {
+		for (Llamada l : cliente.getLlamadas()) {
 			double auxc = 0;
 			if (l.getTipoDeLlamada() == "nacional") {
 				// el precio es de 3 pesos por segundo más IVA sin adicional por establecer la llamada
@@ -66,7 +66,6 @@ public class Empresa {
 				// el precio es de 150 pesos por segundo más IVA más 50 pesos por establecer la llamada
 				auxc += l.getDuracion() * 150 + (l.getDuracion() * 150 * 0.21) + 50;
 			}
-
 			if (cliente.getTipo() == "fisica") {
 				auxc -= auxc*descuentoFis;
 			} else if(cliente.getTipo() == "juridica") {

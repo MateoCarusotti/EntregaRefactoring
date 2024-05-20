@@ -4,13 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cliente {
-	public List<Llamada> llamadas = new ArrayList<Llamada>();
+	private List<Llamada> llamadas = new ArrayList<Llamada>();
 	private String tipo;
 	private String nombre;
 	private String numeroTelefono;
 	private String cuit;
 	private String dni;
-
+	
+	public List<Llamada> getLlamadas(){
+		return this.llamadas;
+	}
+	
+	public void addLlamada(Llamada llamada) {
+		this.llamadas.add(llamada);
+	}
+	
 	public String getTipo() {
 		return tipo;
 	}
