@@ -2,19 +2,41 @@ package ar.edu.unlp.info.oo2.facturacion_llamadas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Empresa {
 	private List<Cliente> clientes = new ArrayList<Cliente>();
 	private List<Llamada> llamadas = new ArrayList<Llamada>();
-	private GestorNumerosDisponibles guia = new GestorNumerosDisponibles();
+	private SortedSet<String> lineas = new TreeSet<String>();
+	private Generador generador;
 
 	static double descuentoJur = 0.15;
 	static double descuentoFis = 0;
+	
+	public Empresa() {
+		this.generador = new GeneradorUltimo();
+	}
+	
+	public SortedSet<String> getLineas() {
+		return lineas;
+	}
+	
+	public String obtenerNumeroLibre() {
+		String linea = this.generador.obtenerNumeroLibre(this.lineas);
+		this.lineas.remove(linea);
+		return linea;
+	
+	}
+	
+	public void cambiarTipoGenerador(Generador generador) {
+		this.generador = generador;
+	}
 
 	public boolean agregarNumeroTelefono(String str) {
-		boolean encontre = guia.getLineas().contains(str);
+		boolean encontre = getLineas().contains(str);
 		if (!encontre) {
-			guia.getLineas().add(str);
+			getLineas().add(str);
 			encontre= true;
 			return encontre;
 		}
@@ -23,10 +45,7 @@ public class Empresa {
 			return encontre;
 		}
 	}
-// HOLA
-	public String obtenerNumeroLibre() {
-		return guia.obtenerNumeroLibre();
-	}
+
 
 	public Cliente registrarUsuario(String data, String nombre, String tipo) {
 		Cliente var = new Cliente();
@@ -84,7 +103,5 @@ public class Empresa {
 		return clientes.contains(persona);
 	}
 
-	public GestorNumerosDisponibles getGestorNumeros() {
-		return this.guia;
-	}
+	
 }

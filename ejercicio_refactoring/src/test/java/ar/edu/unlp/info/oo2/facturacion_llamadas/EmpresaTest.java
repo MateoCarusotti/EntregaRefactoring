@@ -59,12 +59,12 @@ class EmpresaTest {
 		
 		Generador primero = new GeneradorPrimero();
 		
-		this.sistema.getGestorNumeros().cambiarTipoGenerador(primero);
+		this.sistema.cambiarTipoGenerador(primero);
 		assertEquals("2214444554", this.sistema.obtenerNumeroLibre());
 		
 		Generador random = new GeneradorRandom();
 		
-		this.sistema.getGestorNumeros().cambiarTipoGenerador(random);
+		this.sistema.cambiarTipoGenerador(random);
 		assertNotNull(this.sistema.obtenerNumeroLibre());
 	}
 }
