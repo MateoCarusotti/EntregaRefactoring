@@ -10,7 +10,8 @@ public class Empresa {
 	private List<Llamada> llamadas = new ArrayList<Llamada>();
 	private SortedSet<String> lineas = new TreeSet<String>();
 	private Generador generador;
-
+	private ConstructorLlamada constructorLlamada;
+	
 	static double descuentoJur = 0.15;
 	static double descuentoFis = 0;
 	
@@ -33,6 +34,11 @@ public class Empresa {
 		this.generador = generador;
 	}
 
+	public void setearConstructorLlamada(ConstructorLlamada constructor) {
+		
+		this.constructorLlamada = constructor;
+	}
+	
 	public boolean agregarNumeroTelefono(String str) {
 		boolean encontre = getLineas().contains(str);
 		if (!encontre) {
@@ -67,8 +73,8 @@ public class Empresa {
 		return var;
 	}
 
-	public Llamada registrarLlamada(Cliente origen, Cliente destino, String t, int duracion) {
-		Llamada llamada = new Llamada(t, origen.getNumeroTelefono(), destino.getNumeroTelefono(), duracion);
+	public Llamada registrarLlamada(Cliente origen, Cliente destino, int duracion) {
+		Llamada llamada = this.constructorLlamada.crearLlamada(origen.getNumeroTelefono(), destino.getNumeroTelefono(), duracion);
 		llamadas.add(llamada);
 		origen.addLlamada(llamada);
 		return llamada;
@@ -78,13 +84,7 @@ public class Empresa {
 		double c = 0;
 		for (Llamada l : cliente.getLlamadas()) {
 			double auxc = 0;
-			if (l.getTipoDeLlamada() == "nacional") {
-				// el precio es de 3 pesos por segundo más IVA sin adicional por establecer la llamada
-				auxc += l.getDuracion() * 3 + (l.getDuracion() * 3 * 0.21);
-			} else if (l.getTipoDeLlamada() == "internacional") {
-				// el precio es de 150 pesos por segundo más IVA más 50 pesos por establecer la llamada
-				auxc += l.getDuracion() * 150 + (l.getDuracion() * 150 * 0.21) + 50;
-			}
+			auxc += l.getDuracion() * l.getPrecio() + (l.getDuracion() * l.getAdicional() * l.iva) + l.getAdicional();
 			if (cliente.getTipo() == "fisica") {
 				auxc -= auxc*descuentoFis;
 			} else if(cliente.getTipo() == "juridica") {

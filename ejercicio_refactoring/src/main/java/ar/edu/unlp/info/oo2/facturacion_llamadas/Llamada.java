@@ -1,20 +1,37 @@
 package ar.edu.unlp.info.oo2.facturacion_llamadas;
 
 public class Llamada {
-	private String tipoDeLlamada;
 	private String origen;
 	private String destino;
 	private int duracion;
+	private double precio;
+	private double adicional;
 
-	public Llamada(String tipoLlamada, String origen, String destino, int duracion) {
-		this.tipoDeLlamada = tipoLlamada;
+	final static double iva = 0.21;
+	
+	public Llamada(String origen, String destino, int duracion) {
 		this.origen= origen;
 		this.destino= destino;
 		this.duracion = duracion;
 	}
+	
+	
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
 
-	public String getTipoDeLlamada() {
-		return tipoDeLlamada;
+	public double getPrecio() {
+		return precio;
+	}
+
+
+	public double getAdicional() {
+		return adicional;
+	}
+
+
+	public void setAdicional(double adicional) {
+		this.adicional = adicional;
 	}
 
 	public String getRemitente() {
